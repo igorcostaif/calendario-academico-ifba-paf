@@ -25,4 +25,3 @@ export default function App(){
   if(path.startsWith('/public')) return <PublicCalendar />
   return <DashboardCoord user={user} goto={goto} />
 }
-
