@@ -1,29 +1,28 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { supabase } from './services/supabaseClient'
+import Login from './pages/Login'
+import DashboardAdmin from './pages/DashboardAdmin'
+import DashboardCoord from './pages/DashboardCoord'
+import PublicCalendar from './pages/PublicCalendar'
 
-import './App.css'
+export default function App(){
+  const [user, setUser] = useState<any>(null)
+  const [path, setPath] = useState(window.location.pathname)
 
-function App() {
-  const [count, setCount] = useState(0)
+  useEffect(()=>{
+    supabase.auth.getUser().then(r => setUser(r.data.user || null))
+    const { data: sub } = supabase.auth.onAuthStateChange((_, s)=> setUser(s?.user ?? null))
+    const onPop = ()=> setPath(window.location.pathname)
+    window.addEventListener('popstate', onPop)
+    return ()=>{ sub.subscription?.unsubscribe(); window.removeEventListener('popstate', onPop) }
+  },[])
 
-  return (
-    <>
-      <div>
-  
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const goto = (p:string)=>{ window.history.pushState({}, '', p); setPath(p) }
+
+  if(!user && !path.startsWith('/public')) return <Login onLogin={()=> supabase.auth.getUser().then(r=> setUser(r.data.user))} />
+  if(path.startsWith('/admin')) return <DashboardAdmin user={user} goto={goto} />
+  if(path.startsWith('/coord')) return <DashboardCoord user={user} goto={goto} />
+  if(path.startsWith('/public')) return <PublicCalendar />
+  return <DashboardCoord user={user} goto={goto} />
 }
 
-export default App
