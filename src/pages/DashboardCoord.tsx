@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../services/supabaseClient'
 import CalendarView from '../components/CalendarView'
+import EventAccordion from '../components/EventAccordion'
 import { getBrazilNationalHolidays, parseMunicipalCSV } from '../services/holidays'
 import dayjs from 'dayjs'
 import WeekdayCountsChart from '../components/WeekdayCountsChart'
@@ -295,13 +296,22 @@ export default function DashboardCoord({ user, goto }: Any) {
           </aside>
 
           {/* MAIN CONTENT */}
-          <main className="col-span-3">
+         <main className="col-span-3">
             {selected ? (
-              <CalendarView
-                cal={selected}
-                daysMap={daysMap}
-                onReload={() => selectCal(selected)}
-              />
+              <>
+                <CalendarView
+                  cal={selected}
+                  daysMap={daysMap}
+                  onReload={() => selectCal(selected)}
+                />
+
+                <EventAccordion
+                  events={Object.values(daysMap || {}).filter((ev: any) =>
+                    ev.title && ev.title.trim() !== ''
+                  )}
+                  year={selected.year}
+                />
+              </>
             ) : (
               <div className="p-4 bg-white rounded">Selecione um calendário</div>
             )}
