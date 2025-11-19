@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { supabase } from '../services/supabaseClient'
 type Any = any
 
-export default function DashboardAdmin({ user, goto }: Any){
+export default function DashboardAdmin(){
   const [cals,setCals]=useState<Any[]>([])
   useEffect(()=>{ load() },[])
 

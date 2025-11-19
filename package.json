@@ -1,7 +1,7 @@
 {
   "name": "calendario-academico-ifba-paf",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.4.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -9,16 +9,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-     "@supabase/supabase-js": "^2.45.4",
+    "@fullcalendar/core": "^6.1.19",
+    "@fullcalendar/daygrid": "^6.1.19",
+    "@fullcalendar/interaction": "^6.1.19",
+    "@fullcalendar/react": "^6.1.19",
+    "@supabase/supabase-js": "^2.45.4",
     "dayjs": "^1.11.11",
     "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1"
+    "jspdf": "^2.5.1",
+    "papaparse": "^5.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.6",
+    "recharts": "^2.6.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.0",
+    "@types/papaparse": "^5.5.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",

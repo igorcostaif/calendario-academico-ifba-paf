@@ -20,8 +20,9 @@ export default function App(){
   const goto = (p:string)=>{ window.history.pushState({}, '', p); setPath(p) }
 
   if(!user && !path.startsWith('/public')) return <Login onLogin={()=> supabase.auth.getUser().then(r=> setUser(r.data.user))} />
-  if(path.startsWith('/admin')) return <DashboardAdmin user={user} goto={goto} />
-  if(path.startsWith('/coord')) return <DashboardCoord user={user} goto={goto} />
+  if(path.startsWith('/admin')) return <DashboardAdmin />
+  if(path.startsWith('/coord')) 
+    return <DashboardCoord user={user} />
   if(path.startsWith('/public')) return <PublicCalendar />
-  return <DashboardCoord user={user} goto={goto} />
+  return <DashboardCoord user={user} />
 }
